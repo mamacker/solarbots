@@ -28,8 +28,12 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/static", express.static("public"));
 
+let userCt = 0;
 app.get("/", function (req, res, next) {
-  console.log("loaded");
+  userCt++;
+  if (userCt % 10 == 0) {
+    console.log("Users:", userCt);
+  }
   res.sendFile(path.join(__dirname, "public") + "/index.html");
 });
 
