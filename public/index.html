@@ -34,6 +34,7 @@
 		.instructions {
 			font-size: 30px;
 			font-weight: bold;
+			padding: 10px;
 		}
 
 		.toppart {
@@ -48,6 +49,10 @@
 			width: fit-content;
 		}
 
+		#outputwrapper {
+			min-height: 100px;
+		}
+
 		#sayit {
 			width: 100%;
 		}
@@ -55,6 +60,10 @@
 		#imgr {
 			margin: 10px;
 			padding: 5px;
+		}
+
+		.label {
+			margin: 10px;
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -71,9 +80,18 @@
 	<div class="instructions">Tell me about yourself...</div>
 	<textarea id="sayit" type="text" onkeyup="updateData()"></textarea>
 	<div class="instructions">And I'll translate it to Lacrean:</div>
-	<div id="output" class="fonttext fontfun"> </div>
-	<div>Text Color:<input id="pickcolor" /></div>
-	<div>Background Color:<input id="pickbackcolor" /></div>
+	<div id="outputwrapper">
+		<div id="output" class="fonttext fontfun"> </div>
+	</div>
+	<div class="label">
+		<div>Text Color:</div><input id="pickcolor" />
+	</div>
+	<div class="label">
+		<div>Background Color:</div><input id="pickbackcolor" />
+	</div>
+	<div class="label">
+		<div>Font Size:</div><input id="sizeofont" type="number" value="50" />px
+	</div>
 	<div class="instructions">Here is an image of it:</div>
 	<div id="imgr" class="fonttext fontfun"> </div>
 	<script>
@@ -113,6 +131,14 @@
 			$("#output").css({
 				"background-color": textColor
 			});
+			updateData();
+		})
+
+		$("#sizeofont").change(() => {
+			let textSize = $("#sizeofont").val();
+			$("#output").css({
+				fontSize: textSize
+			})
 			updateData();
 		})
 	</script>
