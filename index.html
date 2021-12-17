@@ -1,0 +1,42 @@
+<html>
+
+<head>
+	<link rel="preload" as="font" href="/static/LacreanEmpire.ttf">
+	<style>
+		@font-face {
+			font-family: 'LacreanEmpire';
+			src: url('/static/LacreanEmpire.ttf');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		.fonttext {
+			font-family: LacreanEmpire !important;
+			font-weight: bold;
+		}
+
+		.fontfun {
+			font-size: 50px;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div class="fonttext fontfun">
+		Hello World!
+	</div>
+	<div>Tell me about yourself...</div>
+	<textarea id="sayit" type="text" onkeyup="updateData()"></textarea>
+	<div>And I'll translate it to Lacrean:</div>
+	<div id="output" class="fonttext fontfun"> </div>
+	<script>
+		function updateData() {
+			let user = $("#sayit").val();
+			$("#output").html(user)
+		}
+	</script>
+</body>
+
+</html>
