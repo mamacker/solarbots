@@ -96,7 +96,12 @@
 	<div id="imgr" class="fonttext fontfun"> </div>
 	<script>
 		let timeCheck = null;
-		function updateData() {
+		let typeItOut = null;
+		function updateData(keepTyping) {
+			if (!keepTyping) {
+				clearInterval(typeItOut);
+				typeItOut = null;
+			}
 			let user = $("#sayit").val();
 			$("#output").html(user)
 			clearTimeout(timeCheck);
@@ -141,6 +146,25 @@
 			})
 			updateData();
 		})
+
+		function handleURLParameter() {
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			let typeMe = urlParams.get("value");
+			if (!typeMe) return;
+			let curChar = 0;
+			typeItOut = setInterval(() => {
+				curChar++;
+				if (curChar > typeMe.length) {
+					clearInterval(typeItOut);
+					return;
+				}
+
+				$("#sayit").val(typeMe.substring(0, curChar))
+				updateData(true);
+			}, 100 + (Math.random() * 200));
+		}
+		handleURLParameter();
 	</script>
 </body>
 
