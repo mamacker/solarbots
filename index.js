@@ -29,6 +29,7 @@ app.use(cookieParser());
 app.use("/static", express.static("public"));
 
 app.get("/", function (req, res, next) {
-    res.sendFile(path.join(__dirname, "public") + "/index.html");
+  console.log("loaded");
+  res.sendFile(path.join(__dirname, "public") + "/index.html");
 });
 
