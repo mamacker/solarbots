@@ -33,9 +33,25 @@
 			border-bottom: 1px solid black;
 			margin-bottom: 10px;
 		}
+
+		#output {
+			background-color: white;
+			margin: 10px;
+			padding: 5px;
+		}
+
+		#sayit {
+			width: 100%;
+		}
+
+		#imgr {
+			margin: 10px;
+			padding: 5px;
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"
 		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script src="/static/html2canvas.js"></script>
 </head>
 
 <body>
@@ -46,10 +62,22 @@
 	<textarea id="sayit" type="text" onkeyup="updateData()"></textarea>
 	<div class="instructions">And I'll translate it to Lacrean:</div>
 	<div id="output" class="fonttext fontfun"> </div>
+	<div class="instructions">Here is an image of it:</div>
+	<div id="imgr" class="fonttext fontfun"> </div>
 	<script>
+		let timeCheck = null;
 		function updateData() {
 			let user = $("#sayit").val();
 			$("#output").html(user)
+			clearTimeout(timeCheck);
+			timeCheck = setTimeout(screenshot, 500);
+		}
+
+		function screenshot() {
+			html2canvas($("#output")[0]).then(function (canvas) {
+				$("canvas").remove();
+				$("#imgr").append(canvas);
+			});
 		}
 	</script>
 </body>
