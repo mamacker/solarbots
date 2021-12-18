@@ -77,15 +77,18 @@
 	<div class="fonttext fontfun toppart">
 		Hello World!
 	</div>
-	<div class="instructions">Tell me about yourself...</div>
+	<div class="instructions">Give me the Lacrean image...</div>
 	<form action="/api/upload" enctype="multipart/form-data" method="post">
-		<div>Text field title: <input type="text" name="title" /></div>
 		<div>File: <input type="file" name="someExpressFiles" multiple="multiple" /></div>
-		<input type="submit" value="Upload" />
+		<input id="trying" type="submit" value="Upload" />
 	</form>
 	<script>
 		let timeCheck = null;
 		let typeItOut = null;
+		$("#trying").click(() => {
+			$(".instructions").text("Translating...")
+		});
+
 		function updateData(keepTyping) {
 			if (!keepTyping) {
 				clearInterval(typeItOut);
