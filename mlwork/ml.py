@@ -84,10 +84,6 @@ def CheckSim(img):
     except BaseException:
         return "error"
 
-    if True :
-        cv2.imwrite("pictures/char" + str(time.time()) + ".png", test_gray)
-        lastTrainer = img
-
     labelNames = []
     labelIndexes = []
     trainingSet = []
@@ -123,8 +119,11 @@ def CheckSim(img):
                 topMatch = score
                 topLabel = labelNames[i]
 
+
     if (topLabel == "space"):
         return " "
+    if (topLabel == "nop"):
+        return ""
     return topLabel
 
 lastTrainer = None
