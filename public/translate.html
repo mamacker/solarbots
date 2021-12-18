@@ -1,0 +1,160 @@
+<html>
+
+<head>
+	<style>
+		@font-face {
+			font-family: 'LacreanEmpire';
+			src: url('/static/LacreanEmpire.ttf');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		@font-face {
+			font-family: 'RetroGaming';
+			src: url('/static/RetroGaming.ttf');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		.fonttext {
+			font-family: LacreanEmpire !important;
+			font-weight: bold;
+		}
+
+		.fontfun {
+			font-size: 50px;
+		}
+
+		body {
+			font-family: RetroGaming;
+			background-color: #667;
+			padding: 10px;
+		}
+
+		.instructions {
+			font-size: 30px;
+			font-weight: bold;
+			padding: 10px;
+		}
+
+		.toppart {
+			border-bottom: 1px solid black;
+			margin-bottom: 10px;
+		}
+
+		#output {
+			background-color: white;
+			margin: 10px;
+			padding: 5px;
+			width: fit-content;
+		}
+
+		#outputwrapper {
+			min-height: 100px;
+		}
+
+		#sayit {
+			width: 100%;
+		}
+
+		#imgr {
+			margin: 10px;
+			padding: 5px;
+		}
+
+		.label {
+			margin: 10px;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script src="/static/html2canvas.js"></script>
+	<script src="/static/spectrum.js"></script>
+	<link rel='stylesheet' href='/static/spectrum.css' />
+</head>
+
+<body>
+	<div class="fonttext fontfun toppart">
+		Hello World!
+	</div>
+	<div class="instructions">Tell me about yourself...</div>
+	<form action="/api/upload" enctype="multipart/form-data" method="post">
+		<div>Text field title: <input type="text" name="title" /></div>
+		<div>File: <input type="file" name="someExpressFiles" multiple="multiple" /></div>
+		<input type="submit" value="Upload" />
+	</form>
+	<script>
+		let timeCheck = null;
+		let typeItOut = null;
+		function updateData(keepTyping) {
+			if (!keepTyping) {
+				clearInterval(typeItOut);
+				typeItOut = null;
+			}
+			let user = $("#sayit").val();
+			$("#output").html(user)
+			clearTimeout(timeCheck);
+			timeCheck = setTimeout(screenshot, 250);
+		}
+
+		function screenshot() {
+			html2canvas($("#output")[0]).then(function (canvas) {
+				$("canvas").remove();
+				$("#imgr").append(canvas);
+			});
+		}
+
+		$("#pickcolor").spectrum({
+			color: "#000"
+		});
+
+		$("#pickcolor").change(() => {
+			let textColor = $("#pickcolor").val();
+			$("#output").css({
+				"color": textColor
+			});
+			updateData();
+		})
+
+		$("#pickbackcolor").spectrum({
+			color: "#fff"
+		});
+
+		$("#pickbackcolor").change(() => {
+			let textColor = $("#pickbackcolor").val();
+			$("#output").css({
+				"background-color": textColor
+			});
+			updateData();
+		})
+
+		$("#sizeofont").change(() => {
+			let textSize = $("#sizeofont").val();
+			$("#output").css({
+				fontSize: textSize
+			})
+			updateData();
+		})
+
+		function handleURLParameter() {
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			let typeMe = urlParams.get("value");
+			if (!typeMe) return;
+			let curChar = 0;
+			typeItOut = setInterval(() => {
+				curChar++;
+				if (curChar > typeMe.length) {
+					clearInterval(typeItOut);
+					return;
+				}
+
+				$("#sayit").val(typeMe.substring(0, curChar))
+				updateData(true);
+			}, 100 + (Math.random() * 200));
+		}
+		handleURLParameter();
+	</script>
+</body>
+
+</html>
